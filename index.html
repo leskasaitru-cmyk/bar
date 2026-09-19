@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0a06">
+<title>Beer House — Бар и паб в Мончегорске</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #0f0a06;
+    --bg-soft: #1a1208;
+    --bg-card: #1e1508;
+    --bg-elevated: #2a1e0e;
+    --text: #f5f0e6;
+    --text-muted: #a89678;
+    --amber: #f59e0b;
+    --amber-light: #fbbf24;
+    --amber-dark: #b45309;
+    --amber-soft: rgba(245, 158, 11, 0.12);
+    --gold: #d4a72c;
+    --border: #3a2a16;
+    --border-light: rgba(245, 158, 11, 0.2);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --shadow-amber: rgba(245, 158, 11, 0.3);
+    --header-bg: rgba(15, 10, 6, 0.85);
+  }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -300px;
+    right: -300px;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -300px;
+    left: -300px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 83, 9, 0.08), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  /* ХЕДЕР */
+  header {
+    padding: 20px 0;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .logo-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 6px 20px var(--shadow-amber);
+  }
+
+  .logo span { color: var(--amber); }
+
+  nav { display: flex; gap: 28px; }
+
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--amber); }
+
+  .header-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px var(--shadow-amber);
+    white-space: nowrap;
+  }
+  .header-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px var(--shadow-amber);
+  }
+
+  /* ГЕРОЙ */
+  .hero {
+    padding: 180px 0 100px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1px solid var(--amber);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--amber);
+    margin-bottom: 28px;
+    background: var(--amber-soft);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .hero-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--amber);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 9vw, 110px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+
+  .hero h1 .accent {
+    background: linear-gradient(135deg, var(--amber-light), var(--amber-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto 44px;
+    line-height: 1.7;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 40px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    min-height: 56px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+    color: #fff;
+    box-shadow: 0 12px 30px var(--shadow-amber);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 45px var(--shadow-amber);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: var(--amber-soft);
+  }
+
+  /* СЕКЦИИ */
+  section { padding: 90px 0; }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-label {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .section-title .accent {
+    background: linear-gradient(135deg, var(--amber-light), var(--amber-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ОСОБЕННОСТИ */
+  .features {
+    background: var(--bg-soft);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    transition: all 0.4s ease;
+    text-align: center;
+  }
+
+  .feature-card:hover {
+    border-color: var(--amber);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-light);
+  }
+
+  .feature-icon {
+    width: 70px; height: 70px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 20px;
+    box-shadow: 0 10px 25px var(--shadow-amber);
+  }
+
+  .feature-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .feature-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* МЕНЮ */
+  .menu-tabs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+
+  .menu-tab {
+    padding: 12px 26px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: inherit;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .menu-tab:hover { border-color: var(--amber); color: var(--amber); }
+
+  .menu-tab.active {
+    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 10px 25px var(--shadow-amber);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .menu-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 26px;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .menu-card:hover {
+    border-color: var(--amber);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .menu-icon {
+    font-size: 44px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.3));
+  }
+
+  .menu-info { flex-grow: 1; }
+
+  .menu-name {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .menu-desc {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .menu-price {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--amber);
+    letter-spacing: -0.5px;
+  }
+
+  .menu-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--amber-soft);
+    color: var(--amber);
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .menu-category { display: none; }
+  .menu-category.active { display: block; }
+
+  /* О НАС */
+  .about {
+    background: var(--bg-soft);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-visual {
+    aspect-ratio: 4 / 5;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  }
+
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.15), transparent 60%);
+  }
+
+  .about-visual .icon {
+    font-size: 120px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 8px 20px rgba(245, 158, 11, 0.4));
+  }
+
+  .about-visual .text {
+    font-size: 14px;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .about-text h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .about-text h2 .accent { color: var(--amber); }
+
+  .about-text p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .about-points {
+    list-style: none;
+    margin-top: 28px;
+  }
+
+  .about-points li {
+    position: relative;
+    padding: 10px 0 10px 34px;
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about-points li::before {
+    content: '🍺';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-size: 18px;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 100px 0;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+    border-radius: 28px;
+    padding: 80px 40px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 70px var(--shadow-amber);
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-box > * { position: relative; z-index: 1; }
+
+  .cta-box h2 {
+    font-size: clamp(30px, 6vw, 56px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .cta-box p {
+    font-size: 18px;
+    opacity: 0.95;
+    max-width: 560px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  .btn-white {
+    background: #fff;
+    color: var(--amber-dark);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  }
+  .btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 55px rgba(0,0,0,0.35);
+  }
+
+  .btn-white-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.5);
+  }
+  .btn-white-outline:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: #fff;
+  }
+
+  /* КОНТАКТЫ */
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .contact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .contact-card:hover {
+    border-color: var(--amber);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .contact-icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: var(--amber-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 18px;
+  }
+
+  .contact-card h3 {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .contact-card .value {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s;
+    line-height: 1.4;
+  }
+  a.value:hover { color: var(--amber); }
+
+  .contact-card .note {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ФУТЕР */
+  footer {
+    padding: 50px 0 30px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    letter-spacing: 1px;
+  }
+
+  footer .footer-logo {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  footer .footer-logo span { color: var(--amber); }
+
+  /* АДАПТИВ */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-visual { aspect-ratio: 16 / 9; max-width: 500px; margin: 0 auto; }
+    .about-visual .icon { font-size: 90px; }
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    section { padding: 60px 0; }
+    .hero { padding: 140px 0 60px; }
+    .section-head { margin-bottom: 40px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .cta-box { padding: 60px 28px; border-radius: 22px; }
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    header { padding: 14px 0; }
+    .logo { font-size: 16px; letter-spacing: 1px; }
+    .logo-icon { width: 36px; height: 36px; font-size: 18px; }
+    .header-cta { padding: 10px 16px; font-size: 11px; letter-spacing: 0.5px; }
+
+    .hero { padding: 120px 0 50px; }
+    section { padding: 50px 0; }
+
+    .hero h1 { letter-spacing: -1.5px; }
+    .hero-buttons { flex-direction: column; width: 100%; }
+    .btn { width: 100%; padding: 16px 28px; font-size: 13px; }
+
+    .feature-card { padding: 28px 22px; }
+    .feature-icon { width: 60px; height: 60px; font-size: 26px; }
+
+    .menu-card { padding: 22px 20px; gap: 16px; }
+    .menu-icon { font-size: 36px; }
+    .menu-name { font-size: 15px; }
+    .menu-price { font-size: 18px; }
+
+    .cta-box { padding: 50px 22px; border-radius: 20px; }
+    .cta .hero-buttons { flex-direction: column; width: 100%; }
+
+    footer .footer-logo { font-size: 18px; letter-spacing: 2px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ХЕДЕР -->
+<header>
+  <div class="container header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">🍺</div>
+      Beer<span>House</span>
+    </a>
+    <nav>
+      <a href="#menu">Меню</a>
+      <a href="#about">О нас</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="https://t.me/ТВОЙ_НИК_КЛИЕНТА" target="_blank" rel="noopener" class="header-cta">
+      Забронировать
+    </a>
+  </div>
+</header>
+
+<!-- ГЕРОЙ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Открыто сейчас · до 02:00
+    </div>
+    <h1>Хорошее пиво<br><span class="accent">и атмосфера</span></h1>
+    <p>Бар и паб в центре Мончегорска. Большой выбор разливного пива, вкусные закуски и уютная атмосфера. Заходите — у нас всегда весело.</p>
+    <div class="hero-buttons">
+      <a href="https://t.me/ТВОЙ_НИК_КЛИЕНТА" target="_blank" rel="noopener" class="btn btn-primary">Забронировать столик</a>
+      <a href="#menu" class="btn btn-ghost">Смотреть меню</a>
+    </div>
+  </div>
+</section>
+
+<!-- ОСОБЕННОСТИ -->
+<section class="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">✦ Почему мы</span>
+      <h2 class="section-title">Наши <span class="accent">фишки</span></h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🍺</div>
+        <h3>Много пива</h3>
+        <p>Разливное и бутылочное. Крафт, лагер, стаут — на любой вкус.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🍖</div>
+        <h3>Вкусные закуски</h3>
+        <p>Крылышки, гренки, мясные тарелки. Идеально к пиву.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📺</div>
+        <h3>Спорт на экранах</h3>
+        <p>Показываем футбол, хоккей и бои. Следите за матчами у нас.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎵</div>
+        <h3>Живая музыка</h3>
+        <p>По выходным — живая музыка и DJ. Отдыхайте под хорошие треки.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- МЕНЮ -->
+<section id="menu">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">✦ Меню</span>
+      <h2 class="section-title">Что у нас <span class="accent">есть</span></h2>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="showCategory('beer', this)">🍺 Пиво</button>
+      <button class="menu-tab" onclick="showCategory('snacks', this)">🍖 Закуски</button>
+      <button class="menu-tab" onclick="showCategory('strong', this)">🥃 Покрепче</button>
+      <button class="menu-tab" onclick="showCategory('drinks', this)">🥤 Напитки</button>
+    </div>
+
+    <!-- ПИВО -->
+    <div class="menu-category active" id="beer">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-icon">🍺</div>
+          <div class="menu-info">
+            <div class="menu-name">Светлое разливное <span class="menu-tag">хит</span></div>
+            <div class="menu-desc">Классический лагер. Лёгкий, освежающий.</div>
+            <div class="menu-price">от 120 ₽ / 0.5 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍺</div>
+          <div class="menu-info">
+            <div class="menu-name">Тёмное разливное</div>
+            <div class="menu-desc">Насыщенный вкус с нотками карамели.</div>
+            <div class="menu-price">от 150 ₽ / 0.5 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍻</div>
+          <div class="menu-info">
+            <div class="menu-name">Крафт <span class="menu-tag">новинка</span></div>
+            <div class="menu-desc">Локальные сорта. Спросите о новинках у бармена.</div>
+            <div class="menu-price">от 250 ₽ / 0.5 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍺</div>
+          <div class="menu-info">
+            <div class="menu-name">Пшеничное</div>
+            <div class="menu-desc">Мягкий вкус с фруктовыми нотками.</div>
+            <div class="menu-price">от 180 ₽ / 0.5 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍺</div>
+          <div class="menu-info">
+            <div class="menu-name">IPA</div>
+            <div class="menu-desc">Хмельной, с горчинкой. Для ценителей.</div>
+            <div class="menu-price">от 220 ₽ / 0.5 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍺</div>
+          <div class="menu-info">
+            <div class="menu-name">Бутылочное пиво</div>
+            <div class="menu-desc">Большой выбор импортного и российского.</div>
+            <div class="menu-price">от 180 ₽ / 0.5 л</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЗАКУСКИ -->
+    <div class="menu-category" id="snacks">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-icon">🍗</div>
+          <div class="menu-info">
+            <div class="menu-name">Крылышки <span class="menu-tag">хит</span></div>
+            <div class="menu-desc">Хрустящие куриные крылышки. 6 шт.</div>
+            <div class="menu-price">350 ₽</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍤</div>
+          <div class="menu-info">
+            <div class="menu-name">Креветки</div>
+            <div class="menu-desc">Обжаренные креветки с чесноком.</div>
+            <div class="menu-price">420 ₽</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🧀</div>
+          <div class="menu-info">
+            <div class="menu-name">Сырные палочки</div>
+            <div class="menu-desc">С хрустящей корочкой. 6 шт.</div>
+            <div class="menu-price">280 ₽</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🥨</div>
+          <div class="menu-info">
+            <div class="menu-name">Гренки чесночные</div>
+            <div class="menu-desc">Классическая закуска к пиву.</div>
+            <div class="menu-price">180 ₽</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🥩</div>
+          <div class="menu-info">
+            <div class="menu-name">Мясная тарелка</div>
+            <div class="menu-desc">Ассорти из колбас и копчёностей.</div>
+            <div class="menu-price">550 ₽</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍟</div>
+          <div class="menu-info">
+            <div class="menu-name">Картофель фри</div>
+            <div class="menu-desc">Хрустящий, с соусом на выбор.</div>
+            <div class="menu-price">180 ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ПОКРЕПЧЕ -->
+    <div class="menu-category" id="strong">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-icon">🥃</div>
+          <div class="menu-info">
+            <div class="menu-name">Виски</div>
+            <div class="menu-desc">Шотландский, ирландский, бурбон.</div>
+            <div class="menu-price">от 250 ₽ / 50 мл</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍸</div>
+          <div class="menu-info">
+            <div class="menu-name">Водка</div>
+            <div class="menu-desc">Хорошая водка охлаждённой.</div>
+            <div class="menu-price">от 150 ₽ / 50 мл</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🥃</div>
+          <div class="menu-info">
+            <div class="menu-name">Ром</div>
+            <div class="menu-desc">Белый и тёмный. С колой — идеально.</div>
+            <div class="menu-price">от 220 ₽ / 50 мл</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍹</div>
+          <div class="menu-info">
+            <div class="menu-name">Коктейли</div>
+            <div class="menu-desc">Классика и авторские от бармена.</div>
+            <div class="menu-price">от 350 ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- НАПИТКИ -->
+    <div class="menu-category" id="drinks">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-icon">🥤</div>
+          <div class="menu-info">
+            <div class="menu-name">Кола / Спрайт</div>
+            <div class="menu-desc">Классические газировки.</div>
+            <div class="menu-price">120 ₽ / 0.5 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🧃</div>
+          <div class="menu-info">
+            <div class="menu-name">Соки</div>
+            <div class="menu-desc">Апельсин, яблоко, томат.</div>
+            <div class="menu-price">100 ₽ / 0.2 л</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">☕</div>
+          <div class="menu-info">
+            <div class="menu-name">Кофе</div>
+            <div class="menu-desc">Эспрессо, американо, капучино.</div>
+            <div class="menu-price">от 100 ₽</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-icon">🍵</div>
+          <div class="menu-info">
+            <div class="menu-name">Чай</div>
+            <div class="menu-desc">Чёрный, зелёный, травяной.</div>
+            <div class="menu-price">80 ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- О НАС -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="icon">🍻</div>
+        <div class="text">Здесь могла быть<br>фотография бара</div>
+      </div>
+
+      <div class="about-text">
+        <h2>Бар, куда хочется <span class="accent">вернуться</span></h2>
+        <p>Beer House — это атмосферный бар в самом центре Мончегорска. У нас большой выбор разливного пива, вкусные закуски и приятная атмосфера.</p>
+        <p>Приходите с друзьями после работы, смотрите спортивные матчи на больших экранах или просто отдыхайте под хорошую музыку.</p>
+
+        <ul class="about-points">
+          <li>Работаем ежедневно с 12:00</li>
+          <li>Большой выбор пива и закусок</li>
+          <li>Трансляции спортивных матчей</li>
+          <li>Живая музыка по выходным</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Забронируйте столик</h2>
+      <p>Забронируйте столик заранее — в выходные у нас особенно людно. Ждём вас!</p>
+      <div class="hero-buttons" style="justify-content: center;">
+        <a href="tel:+79646856555" class="btn btn-white">📞 Позвонить</a>
+        <a href="https://t.me/ТВОЙ_НИК_КЛИЕНТА" target="_blank" rel="noopener" class="btn btn-white-outline">✈️ Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">✦ Контакты</span>
+      <h2 class="section-title">Как нас <span class="accent">найти</span></h2>
+    </div>
+
+    <div class="contacts-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h3>Адрес</h3>
+        <div class="value">ул. Бредова, 7</div>
+        <div class="note">Мончегорск</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h3>Часы работы</h3>
+        <div class="value">12:00 – 24:00</div>
+        <div class="note">Пт–Сб до 02:00</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h3>Телефон</h3>
+        <a href="tel:+79646856555" class="value">+7 (964) 685-65-55</a>
+        <div class="note">Звонок или WhatsApp</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">✈️</div>
+        <h3>Telegram</h3>
+        <a href="https://t.me/ТВОЙ_НИК_КЛИЕНТА" target="_blank" rel="noopener" class="value">@ваш_ник</a>
+        <div class="note">Бронирование столика</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ФУТЕР -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">Beer<span>House</span></div>
+    © 2026 Beer House · Бар и паб в Мончегорске
+  </div>
+</footer>
+
+<script>
+  /* ПЕРЕКЛЮЧЕНИЕ КАТЕГОРИЙ МЕНЮ */
+  function showCategory(category, btn) {
+    document.querySelectorAll('.menu-category').forEach(cat => {
+      cat.classList.remove('active');
+    });
+    document.getElementById(category).classList.add('active');
+
+    document.querySelectorAll('.menu-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    btn.classList.add('active');
+  }
+
+  /* ПЛАВНОЕ ПОЯВЛЕНИЕ */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('section:not(.hero)').forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(40px)';
+      section.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+      observer.observe(section);
+    });
+
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 80);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.menu-card, .feature-card, .contact-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      cardObserver.observe(el);
+    });
+  }
+
+  /* СКРОЛЛ */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const headerHeight = document.querySelector('header').offsetHeight;
+        const targetPos = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+        window.scrollTo({ top: targetPos, behavior: prefersReduced ? 'auto' : 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
